@@ -7,6 +7,7 @@ import com.example.taskflow.security.UserPrincipal;
 import com.example.taskflow.service.ActivityService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,13 @@ public class ActivityController {
                 .map(this::toResponse)
                 .toList();
         return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> clearAll() {
+        User currentUser = currentUser();
+        activityService.clearFor(currentUser);
+        return ResponseEntity.noContent().build();
     }
 
     private ActivityLogResponse toResponse(ActivityLog log) {

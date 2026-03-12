@@ -172,6 +172,21 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  onClearActivity(): void {
+    this.activityLoading = true;
+    this.activityError = '';
+    this.#tasks.clearActivity().subscribe({
+      next: () => {
+        this.activityEntries = [];
+        this.activityLoading = false;
+      },
+      error: (err) => {
+        this.activityError = err?.error?.message || 'Failed to clear activity.';
+        this.activityLoading = false;
+      }
+    });
+  }
+
   dismissAlert(): void {
     this.alertVisible = false;
   }
@@ -274,14 +289,14 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  getDueClass(dueDate: string, status: TaskStatus): string {
-    if (status === 'DONE') return '';
+  getDueState(dueDate: string, status: TaskStatus): 'overdue' | 'today' | 'done' | 'upcoming' {
+    if (status === 'DONE') return 'done';
     const due = new Date(dueDate);
     const today = new Date();
     due.setHours(0, 0, 0, 0);
     today.setHours(0, 0, 0, 0);
-    if (due < today) return 'due--over';
-    if (due.getTime() === today.getTime()) return 'due--today';
-    return '';
+    if (due < today) return 'overdue';
+    if (due.getTime() === today.getTime()) return 'today';
+    return 'upcoming';
   }
 }

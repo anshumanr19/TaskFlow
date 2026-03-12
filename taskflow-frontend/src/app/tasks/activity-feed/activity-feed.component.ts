@@ -15,6 +15,7 @@ export class ActivityFeedComponent {
   @Input() loading = false;
   @Input() error = '';
   @Output() refresh = new EventEmitter<void>();
+  @Output() clear = new EventEmitter<void>();
 
   colorClass(actionCode: string): string {
     switch (actionCode) {

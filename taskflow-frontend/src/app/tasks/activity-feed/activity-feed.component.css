@@ -13,6 +13,12 @@
   margin-bottom: 10px;
 }
 
+.feed__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .feed__head h3 {
   margin: 0;
   color: #7c3aed;
@@ -20,7 +26,8 @@
   font-weight: 800;
 }
 
-.feed__refresh {
+.feed__refresh,
+.feed__clear {
   border: 1px solid #8b5cf6;
   border-radius: 8px;
   background: #ffffff;

@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ActivityService {
     List<ActivityLog> findRecent(User currentUser, int limit);
+
+    void clearFor(User currentUser);
 }

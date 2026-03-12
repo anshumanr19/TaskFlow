@@ -64,4 +64,8 @@ export class TaskService {
   activity(): Observable<ActivityLogResponse[]> {
     return this.#http.get<ActivityLogResponse[]>(`${environment.apiBaseUrl}/api/activity`);
   }
+
+  clearActivity(): Observable<void> {
+    return this.#http.delete<void>(`${environment.apiBaseUrl}/api/activity`);
+  }
 }

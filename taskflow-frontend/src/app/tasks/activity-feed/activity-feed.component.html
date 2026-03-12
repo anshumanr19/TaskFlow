@@ -1,7 +1,10 @@
 <aside class="feed">
   <div class="feed__head">
     <h3>Activity Feed</h3>
-    <button type="button" class="feed__refresh" (click)="refresh.emit()">Refresh</button>
+    <div class="feed__actions">
+      <button type="button" class="feed__refresh" (click)="refresh.emit()">Refresh</button>
+      <button type="button" class="feed__clear" (click)="clear.emit()">Clear</button>
+    </div>
   </div>
 
   <div class="feed__state" *ngIf="loading">Loading activity...</div>

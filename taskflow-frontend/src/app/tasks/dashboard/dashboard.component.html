@@ -41,7 +41,9 @@
           [ngClass]="{
             'card--todo': task.status === 'TODO',
             'card--ip': task.status === 'IN_PROGRESS',
-            'card--done': task.status === 'DONE'
+            'card--done': task.status === 'DONE',
+            'card--overdue': getDueState(task.dueDate, task.status) === 'overdue',
+            'card--due-today': getDueState(task.dueDate, task.status) === 'today'
           }"
         >
           <header class="card__head">
@@ -60,8 +62,20 @@
           </div>
 
           <div class="card__meta assignee">{{ task.assignedToName || 'Unassigned' }}</div>
-          <div class="card__meta" [ngClass]="getDueClass(task.dueDate, task.status)">
-            Due: {{ task.dueDate }}
+          <div
+            class="card__meta"
+            [ngClass]="{
+              'due--over': getDueState(task.dueDate, task.status) === 'overdue',
+              'due--today': getDueState(task.dueDate, task.status) === 'today'
+            }"
+          >
+            {{
+              getDueState(task.dueDate, task.status) === 'overdue'
+                ? 'Overdue — '
+                : getDueState(task.dueDate, task.status) === 'today'
+                  ? 'Due Today — '
+                  : 'Due: '
+            }}{{ task.dueDate }}
           </div>
 
           <footer class="card__actions">
@@ -81,6 +95,7 @@
       [loading]="activityLoading"
       [error]="activityError"
       (refresh)="loadActivity()"
+      (clear)="onClearActivity()"
     ></app-activity-feed>
   </div>
 </section>
